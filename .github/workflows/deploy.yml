@@ -1,4 +1,4 @@
-
+#workflows
 name: 'Terraform'
 
 on:
@@ -14,7 +14,7 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
-    working-directory: $my-terraform
+    working-directory: my-terraform
 
     defaults:
       run:
