@@ -2,6 +2,7 @@ terraform {
   backend "s3" {
     bucket = "webhost-myaws"
     key = "./tf/terraform.tfstate"
+    region = "eu-west-2"
   }
 }
 
