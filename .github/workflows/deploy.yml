@@ -36,7 +36,7 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     
     -name: Change to Terraform Directory
-     run: cd my-terraform
+    run: cd my-terraform
 
     - name: Terraform Init
       run: terraform init
