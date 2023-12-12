@@ -35,18 +35,15 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        backend_config: "region=${{ secrets.AWS_REGION }}"  # Add the appropriate backend configuration
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Terraform Init
-      run: terraform init
-      working-directory: my-terraform
+      run: terraform init my-terraform
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve 
-      working-directory: my-terraform
+      run: terraform apply -auto-approve my-terraform
 
     - name: Delay for 2 minutes
       run: sleep 120  # sleep for 2 minutes
