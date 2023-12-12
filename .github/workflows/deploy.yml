@@ -1,4 +1,4 @@
-name: 'Terraform'
+name: Terraform
 
 on:
   push:
@@ -6,30 +6,37 @@ on:
       - main
 
 jobs:
-  terraform:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.0  # Update with the desired Terraform version
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
 
-      - name: Configure AWS credentials
-        run: |
-          mkdir -p ~/.aws
-          echo "[default]" > ~/.aws/credentials
-          echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
-          echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+    - name: Terraform Init
+      run: terraform init
 
-      - name: Initialize Terraform
-        run: terraform init -backend-config=terraform/backend.tfvars
+    - name: Terraform Validate
+      run: terraform validate
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
 
-      - name: Output EC2 public IP
-        run: echo "EC2 Public IP: ${{ steps.apply.outputs.outputs.instance_public_ip }}"
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
+
+    - name: Show EC2 instance IP
+      run: echo "The public IP of the EC2 instance is ${{ steps.output.outputs.instance_public_ip }}"
+
+    - name: Clean up Terraform files
+      run: |
+        terraform destroy -auto-approve
+        rm -rf .terraform tfplan
+
+  outputs:
+    instance_public_ip: ${{ steps.output.outputs.instance_public_ip }}
