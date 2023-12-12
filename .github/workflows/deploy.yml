@@ -40,7 +40,8 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Terraform Init
-      run: terraform init my-terraform
+      run: terraform init
+      working-directory: my-terraform
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
