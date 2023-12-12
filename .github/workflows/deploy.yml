@@ -34,6 +34,9 @@ jobs:
         backend_config: "region=${{ secrets.AWS_REGION }}"  # Add the appropriate backend configuration
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
+    -name: Change to Terraform Directory
+     run: cd my-terraform
 
     - name: Terraform Init
       run: terraform init
