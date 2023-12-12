@@ -41,7 +41,7 @@ jobs:
 
     - name: Terraform Init
       run: terraform init 
-      working-directory: my-terraform/main.tf
+      working-directory: main.tf
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
