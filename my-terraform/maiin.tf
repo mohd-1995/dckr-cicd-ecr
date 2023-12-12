@@ -6,8 +6,6 @@ terraform {
     bucket = "webhost-myaws"
     key = "./tf/terraform.tfstate"
     region = "eu-west-2"
-    encrypt        = true
-    dynamodb_table = "tf-table-lock"
   }
 }
 
