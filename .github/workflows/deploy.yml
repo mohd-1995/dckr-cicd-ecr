@@ -40,16 +40,18 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Terraform Init
-      run: terraform init 
+      run: terraform init
       working-directory: my-terraform
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve my-terraform
+      run: terraform apply -auto-approve
+      working-directory: my-terraform
 
     - name: Delay for 2 minutes
       run: sleep 120  # sleep for 2 minutes
 
     - name: Terraform Destroy
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform destroy -auto-approve my-terraform
+      run: terraform destroy -auto-approve
+      working-directory: my-terraform
