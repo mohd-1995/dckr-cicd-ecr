@@ -21,6 +21,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        repository: my-terraform/main.tf
+        path: ../../my-terraform/main.tf
 
     - name: Setup AWS credentials
       run: |
