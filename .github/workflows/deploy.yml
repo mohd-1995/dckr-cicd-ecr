@@ -1,3 +1,4 @@
+
 name: 'Terraform'
 
 on:
@@ -21,7 +22,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-
+    
+    - name: Change to Terraform directory
+      run: cd my-terraform
+    
     - name: Setup AWS credentials
       run: |
         mkdir -p ~/.aws
@@ -32,8 +36,8 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         backend_config: "region=${{ secrets.AWS_REGION }}"  # Add the appropriate backend configuration
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Terraform Init
       run: terraform init
